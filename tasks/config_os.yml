@@ -1,0 +1,73 @@
+---
+# tasks file for glance
+- name: "Create glance user"
+  openstack.cloud.identity_user:
+    auth:
+      auth_url: "{{ os_glance_cloud_auth.auth_url }}"
+      username: "{{ os_glance_cloud_auth.username }}"
+      password: "{{ os_glance_cloud_auth.password }}"
+      project_id: "{{ os_glance_cloud_auth.project_id }}"
+      project_name: "{{ os_glance_cloud_auth.project_name }}"
+      user_domain_name: "{{ os_glance_cloud_auth.user_domain_name }}"
+    name: glance
+    password: glance
+    domain: default
+    state: present
+  no_log: true
+  delegate_to: localhost
+
+- name: "Add glance user to project service with admin role"
+  openstack.cloud.role_assignment:
+    auth:
+      auth_url: "{{ os_glance_cloud_auth.auth_url }}"
+      username: "{{ os_glance_cloud_auth.username }}"
+      password: "{{ os_glance_cloud_auth.password }}"
+      project_id: "{{ os_glance_cloud_auth.project_id }}"
+      project_name: "{{ os_glance_cloud_auth.project_name }}"
+      user_domain_name: "{{ os_glance_cloud_auth.user_domain_name }}"
+    user: glance
+    role: admin
+    project: service
+    state: present
+  delegate_to: localhost
+
+- name: "Create glance service"
+  openstack.cloud.catalog_service:
+    auth:
+      auth_url: "{{ os_glance_cloud_auth.auth_url }}"
+      username: "{{ os_glance_cloud_auth.username }}"
+      password: "{{ os_glance_cloud_auth.password }}"
+      project_id: "{{ os_glance_cloud_auth.project_id }}"
+      project_name: "{{ os_glance_cloud_auth.project_name }}"
+      user_domain_name: "{{ os_glance_cloud_auth.user_domain_name }}"
+    state: present
+    name: glance
+    type: image
+    description: OpenStack Image Service
+  delegate_to: localhost
+
+- name: Create endpoint service for glance
+  openstack.cloud.endpoint:
+    auth:
+      auth_url: "{{ os_glance_cloud_auth.auth_url }}"
+      username: "{{ os_glance_cloud_auth.username }}"
+      password: "{{ os_glance_cloud_auth.password }}"
+      project_id: "{{ os_glance_cloud_auth.project_id }}"
+      project_name: "{{ os_glance_cloud_auth.project_name }}"
+      user_domain_name: "{{ os_glance_cloud_auth.user_domain_name }}"
+    service: glance
+    endpoint_interface: "{{ item.interface }}"
+    url: "{{ item.url }}"
+    region: "{{ item.region }}"
+    state: present
+  loop:
+    - interface: admin
+      url: http://10.0.0.50:9292
+      region: Nation1
+    - interface: internal
+      url: http://10.0.0.50:9292
+      region: Nation1
+    - interface: public
+      url: http://10.0.0.50:9292
+      region: Nation1
+  delegate_to: localhost
