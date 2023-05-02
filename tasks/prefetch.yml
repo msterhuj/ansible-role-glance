@@ -1,0 +1,9 @@
+---
+- name: "test os_glance_cloud_auth config"
+  ansible.builtin.assert:
+    that:
+      - os_glance_cloud_auth.username
+      - os_glance_cloud_auth.password
+      - os_glance_cloud_auth.project_id
+    fail_msg: "please config 'os_glance_cloud_auth' for openstack user, role & service management"
+    success_msg: "Cloud config ok"

@@ -1,2 +1,6 @@
 ---
-# tasks file for glance
+- name: "Prefetch"
+  ansible.builtin.include_tasks:
+    file: prefetch.yml
+  run_once: true
+
