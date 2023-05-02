@@ -4,3 +4,13 @@
     file: prefetch.yml
   run_once: true
 
+- name: "Config openstack service"
+  ansible.builtin.include_tasks:
+    file: config_os.yml
+  run_once: true
+
+- name: "Intall glance"
+  apt:
+    name: "glance"
+    state: present
+  become: true
