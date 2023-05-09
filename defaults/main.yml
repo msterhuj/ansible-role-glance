@@ -31,3 +31,4 @@ os_glannce_paste_deploy_flavor: "keystone"
 os_glance_stores: "file,http"
 os_glance_store_default: "file"
 os_glance_store_filesystem_datadir: "/var/lib/glance/images"
+os_glance_use_keystone_limits: false

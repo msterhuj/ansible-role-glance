@@ -10,7 +10,7 @@
       project_name: "{{ os_glance_cloud_auth.project_name }}"
       user_domain_name: "{{ os_glance_cloud_auth.user_domain_name }}"
     name: glance
-    password: "{{ os_glance_ka_password }}"
+    password: {{ os_glance_ka_password }}
     domain: default
     state: present
   no_log: true
