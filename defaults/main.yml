@@ -9,22 +9,24 @@ os_glance_cloud_auth:
   user_domain_name: "Default"
 
 os_glance_db_host: "localhost"
-os_glance_db_name: "keystone"
-os_glance_db_user: "keystone"
-os_glance_db_pass: "keystone"
+os_glance_db_name: "glance"
+os_glance_db_user: "glance"
+os_glance_db_pass: "glance"
 
 os_glance_db_connection: "mysql+pymysql://{{ os_glance_db_user }}:{{ os_glance_db_pass }}@{{ os_glance_db_host }}/{{ os_glance_db_name }}"
 
 # ka is an abbreviation for keystone_authtoken
 os_glance_ka_www_authenticate_uri: "http://{{ ansible_fqdn }}:5000"
 os_glance_ka_auth_url: "http://{{ ansible_fqdn }}:5000"
-#os_glance_ka_memcached_servers: "{{ ansible_fqdn }}:11211"
+os_glance_ka_memcached_servers: "{{ ansible_fqdn }}:11211"
 os_glance_ka_auth_type: "password"
 os_glance_ka_project_domain_name: "Default"
 os_glance_ka_user_domain_name: "Default"
 os_glance_ka_project_name: "service"
 os_glance_ka_username: "glance"
 os_glance_ka_password: "GLANCE_PASS"
+
+os_glannce_paste_deploy_flavor: "keystone"
 
 os_glance_stores: "file,http"
 os_glance_store_default: "file"
